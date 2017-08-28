@@ -1,0 +1,12 @@
+<div class="container main form-box">
+  <h2>Add Locations</h2>
+  <form [formGroup] = "addPlaceForm" (ngSubmit) = 'add(addPlaceForm.value)'>
+    <md-input-container class="input-full-width" floatPlaceholder="auto">
+        <input mdInput  formControlName="place" type="text" required placeholder="Enter Place Name">
+    </md-input-container>
+      <md-input-container class="input-full-width" floatPlaceholder="auto">
+        <input mdInput  formControlName="numOfSlots" type="number" required placeholder="Enter Number of slots">
+    </md-input-container>
+    <button md-button class="btn btn-info btn-block" (click)="onClick" [disabled] = "!addPlaceForm.valid">Add</button>
+  </form>
+</div>

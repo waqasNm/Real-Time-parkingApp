@@ -1,0 +1,67 @@
+<h2 class="text-center text-info">Parking Places</h2>
+
+<div style="width: 300px;">
+    <ngb-alert  *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+    <ngb-alert  *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
+</div>
+
+<div class="container form-box">
+    <ngb-accordion [closeOthers]="true" >
+        <ngb-panel id="static-{{i+1}}" title="{{place.place}} - {{place.numOfSlots}}-View " *ngFor="let place of placesVal;let i = index">
+            <ng-template ngbPanelContent>
+                <md-toolbar class="places-md-toolbar" color="primary" >
+                    <span class="text-secondary">Select Date And Time </span>
+                    <md-toolbar-row color="accent" >
+                        <form [formGroup]="parkingTime" (ngSubmit)="bookParking(parkingTime.value, i)">
+                            <md-input-container floatPlaceholder="auto">
+                                <input #date mdInput formControlName="date" type="date" (blur) = "demoFunc(date.value)" required placeholder="">
+                            </md-input-container>
+                            <md-input-container floatPlaceholder="auto">
+                                <input mdInput formControlName="time" type="time" required placeholder="">
+                            </md-input-container>
+                            <md-select formControlName="hours" placeholder="hours" required>
+                                <md-option [value]="1">1 hours</md-option>
+                                <md-option [value]="2">2 hours</md-option>
+                                <md-option [value]="3">3 hours</md-option>
+                                <md-option [value]="4">4 hours</md-option>
+                                <md-option [value]="5">5 hours</md-option>
+                                <md-option [value]="6">6 hours</md-option>
+                                <md-option [value]="7">7 hours</md-option>
+                                <md-option [value]="8">8 hours</md-option>
+                                <md-option [value]="9">9 hours</md-option>
+                                <md-option [value]="10">10 hours</md-option>
+                                <md-option [value]="11">11 hours</md-option>
+                                <md-option [value]="12">12 hours</md-option>
+                            </md-select>
+                            <button md-button [disabled]="!parkingTime.valid" (click) = "place[placesKey[i]] = ! place[placesKey[i]]">View Slots</button>
+                        </form>
+                    </md-toolbar-row>
+                    <md-toolbar-row *ngIf="place[placesKey[i]]">
+                        <!--<button md-button class="btn btn-secondary"   (click)="selectSlot(i+1)" *ngFor="let slot of place.slots; let i = index">
+               {{slot}}
+            </button>-->
+            <button md-button class="btn btn-secondary"   (click)="selectSlot(i+1)" *ngFor="let slot of availableSlots; let i = index">
+              Slot-{{slot}}
+            </button>
+            <br><br>
+            
+                        <!-- This fills the remaining space of the current row -->
+                        <span class="example-fill-remaining-space"></span>
+                        <!--<span>LogOut</span>-->
+                        <span>
+            <button md-button md-raised-button color="accent" (click)="reserved(i)">Book Parking</button>
+        </span>
+                    </md-toolbar-row>
+                    <md-toolbar-row *ngIf="place[placesKey[i]]">
+                          <h4 class="text-success">Reserved Slot: </h4>
+                            <p *ngFor = "let rslot of bookedSlots; let i = index">
+                                <button md-button md-raised-button color="warn">Slot - {{rslot}}</button>
+                            </p>
+                    </md-toolbar-row>
+                </md-toolbar>
+            </ng-template>
+        </ngb-panel>
+    </ngb-accordion>
+</div>
+
+

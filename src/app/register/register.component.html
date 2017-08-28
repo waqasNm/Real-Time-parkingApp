@@ -1,0 +1,16 @@
+<div class="form-group container main form-box">
+  <h2 class="text-info">Registeration Form</h2>
+  <form [formGroup]="signupForm" (ngSubmit) = "signup(signupForm.value)">
+    <md-input-container class="input-full-width"  floatPlaceholder="auto">
+        <input mdInput  formControlName="name" type="text" required placeholder="Enter full name">
+    </md-input-container>
+    <md-input-container class="input-full-width" floatPlaceholder="auto">
+        <input mdInput formControlName="email" type="email" required placeholder="Enter email">
+    </md-input-container>
+    <md-input-container class="input-full-width" floatPlaceholder="auto">
+        <input mdInput formControlName="password" type="password" required placeholder="Enter password">
+    </md-input-container>
+    <button md-button class="btn btn-success btn-block" [disabled]="!signupForm.valid">Register</button>
+    <p>already have an account <a href="#" md-button routerLink="/login" class="text-info"> Login</a></p>
+  </form>
+</div>

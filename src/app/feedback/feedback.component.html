@@ -1,0 +1,73 @@
+<div style="width: 300px;">
+    <ngb-alert  *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+    <ngb-alert  *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
+</div>
+
+<div class="container">
+  <md-tab-group>
+    <md-tab label="Feedbacks">
+       <md-card>
+        <md-card-header>
+          <md-card-title><h2 class="text-center text-primary">Feedbacks</h2></md-card-title>
+          <md-card-subtitle>Total Feedbacks-{{feedArr.length}}</md-card-subtitle>
+        </md-card-header>
+         <md-card-content>
+           <md-list>
+              <md-list-item *ngFor = "let fb of feedArr;let i = index" style="border: 1px solid grey; height: auto !important">
+                <h4 md-line><strong>Title : {{fb.title}}</strong></h4>
+                <p md-line>Description : {{fb.description}} </p>
+                <p md-line>User : {{fb.userName}}</p>
+              
+              <span md-line *ngIf = "fb.Reply">
+               <h4 md-line>Replies:</h4>  
+                <p md-line  *ngFor="let rep of fb.Reply; let num = index" >
+                  <md-chip-list>
+                    <md-chip color="primary" selected="true">{{rep.name}} : {{rep.text}}</md-chip>
+                  </md-chip-list>
+                </p>
+              </span>
+               
+
+          <span class="example-spacer"></span>
+          <button md-button md-raised-button color="primary" (click) = "reply[feedKey[i]] = !reply[feedKey[i]]">{{ reply[feedKey[i]]? "close":"Reply"}}</button>
+          <button md-button md-raised-button color="warn" (click) = "deleteFeedback(i,fb.userId)" >Delete</button>
+          
+  
+        <!--<md-divider ></md-divider>-->
+        <br><br>
+        <div md-line *ngIf="reply[feedKey[i]]" style="padding: 20px">
+          
+          <!--<p  *ngFor="let rep of fb.Reply; let num = index" >
+            {{rep.name}} : {{rep.text}} 
+          </p>-->
+
+          <p style="width: 50%">
+            <md-input-container floatPlaceholder="auto">
+                <input mdInput type="text" required [(ngModel)] = "replyText" placeholder="Message" required>
+            </md-input-container>
+            <br>
+            <button md-button color="primary" (click) = "sendReply(fb,i)">Send</button>
+          </p>
+
+        </div>
+               </md-list-item>
+           </md-list>
+         </md-card-content>
+      </md-card>
+    </md-tab>
+    <md-tab label="New Feedback">
+      <div class = "container main form-box">
+        <h2>Send Feedback</h2>
+        <form [formGroup] = "fbForm" (ngSubmit) = "sendFb(fbForm.value)">
+          <md-input-container class="input-full-width" floatPlaceholder="auto">
+              <input mdInput formControlName="title" type="text" required placeholder="Title">
+          </md-input-container>
+          <md-input-container class="input-full-width" floatPlaceholder="auto">
+              <input mdInput formControlName="description" type="text" required placeholder="description">
+          </md-input-container>
+          <button md-button [disabled]="!fbForm.valid" class="btn btn-primary btn-block" color="primary">Send</button>
+        </form>
+      </div>
+    </md-tab>
+  </md-tab-group>
+</div>

@@ -1,0 +1,24 @@
+<p>
+  user works!
+</p>
+
+<div class="container">
+   <md-card >
+        <md-card-header>
+          <md-card-title><h2>All Users</h2></md-card-title>
+        </md-card-header>
+         <md-card-content>
+           <md-list>
+              <md-list-item *ngFor = "let user of usersVal;let i = index" style="border: 1px solid grey; height: auto !important">
+                <h4 md-line>Name : {{user.name}}</h4>
+                <p md-line>Email : {{user.email}} </p>
+                <!--<p md-line>User : {{fb.userName}}</p>-->
+
+          <span class="example-spacer"></span>
+          <!--<button md-button md-raised-button color="primary">Reply</button>-->
+          <button md-button md-raised-button color="warn" (click) = "deleteUser(i)" >Delete</button>
+               </md-list-item>
+           </md-list>
+         </md-card-content>
+      </md-card>
+</div>
